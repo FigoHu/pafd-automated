@@ -8,6 +8,7 @@ from getpass import getpass
 import re
 import base64
 import easyocr
+import ddddocr as dd
 import io
 import numpy
 from PIL import Image
@@ -164,24 +165,29 @@ class Zlapp(Fudan):
             print("\n\n*******未提交*******")
             self.last_info = last_info["d"]["oldInfo"]
             
-    def read_captcha(self, img_byte):
-        img = Image.open(io.BytesIO(img_byte)).convert('L')
-        enh_bri = ImageEnhance.Brightness(img)
-        new_img = enh_bri.enhance(factor=1.5)
+#     def read_captcha(self, img_byte):
+#         img = Image.open(io.BytesIO(img_byte)).convert('L')
+#         enh_bri = ImageEnhance.Brightness(img)
+#         new_img = enh_bri.enhance(factor=1.5)
         
-        image = numpy.array(new_img)
-        reader = easyocr.Reader(['en'])
-        horizontal_list, free_list = reader.detect(image, optimal_num_chars=4)
-        character = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-        allow_list = list(character)
-        allow_list.extend(list(character.lower()))
+#         image = numpy.array(new_img)
+#         reader = easyocr.Reader(['en'])
+#         horizontal_list, free_list = reader.detect(image, optimal_num_chars=4)
+#         character = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+#         allow_list = list(character)
+#         allow_list.extend(list(character.lower()))
     
-        result = reader.recognize(image, 
-                                allowlist=allow_list,
-                                horizontal_list=horizontal_list[0],
-                                free_list=free_list[0],
-                                detail = 0)
-        return result[0]
+#         result = reader.recognize(image, 
+#                                 allowlist=allow_list,
+#                                 horizontal_list=horizontal_list[0],
+#                                 free_list=free_list[0],
+#                                 detail = 0)
+#         return result[0]
+    
+    def read_captcha(self, img):
+        ocr = dd.DdddOcr()
+        code = ocr.classification(img=img)
+        return code
     
 
     def validate_code(self):
