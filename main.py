@@ -285,7 +285,7 @@ if __name__ == '__main__':
     # 加入随机时间
     import random
     import time
-    delay = randint(1, 60)
+    delay = random.randint(1, 60)
     time.sleep(delay)
     
     zlapp_login = 'https://uis.fudan.edu.cn/authserver/login?' \
