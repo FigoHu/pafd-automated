@@ -281,6 +281,13 @@ def get_account():
 if __name__ == '__main__':
     uid, psw = get_account()
     # print(uid, psw)
+    
+    # 加入随机时间
+    import random
+    import time
+    delay = randomint(1, 60)
+    time.sleep(delay)
+    
     zlapp_login = 'https://uis.fudan.edu.cn/authserver/login?' \
                   'service=https://zlapp.fudan.edu.cn/site/ncov/fudanDaily'
     code_url = "https://zlapp.fudan.edu.cn/backend/default/code"
